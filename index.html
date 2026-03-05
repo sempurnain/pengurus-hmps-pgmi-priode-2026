@@ -13,18 +13,15 @@
             background: #000; 
             color: #fff;
             margin: 0; padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             overflow: hidden;
+            font-style: normal !important;
         }
         * { font-style: normal !important; -webkit-tap-highlight-color: transparent; }
 
-        /* iOS 18 Dynamic Liquid Background */
         .liquid-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+            overflow: hidden;
         }
         .liquid-blob {
             position: absolute; width: 500px; height: 500px;
@@ -33,136 +30,152 @@
             animation: move 25s infinite alternate ease-in-out;
         }
         .blob-1 { top: -100px; left: -100px; }
-        .blob-2 { bottom: -100px; right: -100px; background: radial-gradient(circle, rgba(5, 150, 105, 0.3) 0%, rgba(0, 0, 0, 0) 70%); animation-delay: -5s; }
+        .blob-2 { bottom: -100px; right: -100px; animation-delay: -5s; }
         
         @keyframes move {
-            from { transform: translate(0, 0) scale(1); }
-            to { transform: translate(100px, 50px) scale(1.2); }
+            from { transform: translate(0, 0) scale(1) rotate(0deg); }
+            to { transform: translate(150px, 100px) scale(1.3) rotate(90deg); }
         }
 
-        /* Card Style - Auto Height & Responsive Width */
         .ios-glass {
             background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            backdrop-filter: blur(35px) saturate(200%);
+            -webkit-backdrop-filter: blur(35px) saturate(200%);
             border: 0.5px solid rgba(255, 255, 255, 0.15);
             border-radius: 2.5rem;
-            width: 92%; /* Lebar otomatis di HP */
-            max-width: 360px; /* Lebar maksimal di layar besar */
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         .ios-btn {
             background: rgba(255, 255, 255, 0.06);
             border: 0.5px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .ios-btn:active { transform: scale(0.97); background: rgba(255, 255, 255, 0.12); }
+        .ios-btn:active { transform: scale(0.96); background: rgba(255, 255, 255, 0.15); }
 
-        .page { display: none; animation: fadeIn 0.4s ease-out forwards; }
-        .page-active { display: flex; flex-direction: column; }
+        .page { display: none; animation: iosSlideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+        .page-active { display: flex; flex-direction: column; height: 100%; }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes iosSlideUp {
+            from { opacity: 0; transform: translateY(20px); filter: blur(5px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
+        .haptic-pulse { animation: haptic 2s infinite; }
+        @keyframes haptic { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        
         .scrollbar-hide::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body>
+<body class="flex justify-center items-center min-h-screen p-2">
 
     <div class="liquid-bg">
         <div class="liquid-blob blob-1"></div>
         <div class="liquid-blob blob-2"></div>
     </div>
 
-    <!-- Main Card Container -->
-    <div class="ios-glass overflow-hidden">
+    <!-- Main Container -->
+    <div class="w-full max-w-[330px] h-[580px] ios-glass relative overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
         
-        <!-- HALAMAN 1 -->
-        <div id="main-page" class="page page-active p-6 text-center">
+        <!-- ================= HALAMAN 1: HOME ================= -->
+        <!-- p-4 diturunkan padding atasnya menggunakan pt-5 -->
+        <div id="main-page" class="page page-active px-4 pt-5 pb-4 text-center">
             
-            <!-- Header: Margin dikurangi agar simetris dengan padding card -->
-            <div class="mb-8">
-                <div class="inline-flex items-center gap-2 bg-emerald-500/20 px-3 py-1 rounded-full border border-emerald-500/30 mb-4">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span class="text-[9px] font-bold tracking-[0.2em] text-emerald-100 uppercase">Pengurus HMPS</span>
+            <!-- Header Section: Jarak atas (mt-0) & Jarak bawah (mb-4) dipersempit -->
+            <div class="mt-0 mb-4">
+                <div class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full border border-white/10 mb-2 haptic-pulse">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <span class="text-[8px] font-bold tracking-[0.2em] text-emerald-100 uppercase">Pengurus HMPS</span>
                 </div>
-                <h1 class="text-xl font-bold tracking-tight text-white mb-1">PGMI UIN MALANG</h1>
-                <p class="text-[10px] text-emerald-400/80 font-semibold tracking-widest uppercase">Periode 2024 - 2025</p>
+                <h1 class="text-lg font-bold tracking-tight text-white mb-0">PGMI UIN MALANG</h1>
+                <p class="text-[9px] text-emerald-400/80 font-semibold tracking-widest leading-none">PERIODE 2024 - 2025</p>
             </div>
 
-            <!-- List Menu -->
-            <div class="space-y-3 mb-8">
-                <a href="https://youtube.com/@hmpspgmiuinmalang7341" target="_blank" class="ios-btn flex items-center p-3.5 rounded-2xl">
-                    <div class="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center mr-4">
-                        <i class="fab fa-youtube text-red-500 text-lg"></i>
+            <!-- List Links: Spacing diperkecil -->
+            <div class="space-y-2 flex-grow overflow-y-auto scrollbar-hide">
+                <a href="https://youtube.com/@hmpspgmiuinmalang7341" target="_blank" class="ios-btn flex items-center p-3 rounded-2xl group">
+                    <div class="w-9 h-9 bg-red-500/20 rounded-xl flex items-center justify-center mr-3 border border-red-500/20">
+                        <i class="fab fa-youtube text-red-500 text-base"></i>
                     </div>
-                    <span class="text-xs font-semibold text-gray-200">YouTube Official</span>
+                    <span class="text-[11px] font-semibold text-gray-200">YouTube Official</span>
                 </a>
 
-                <a href="https://www.instagram.com/sahabatpgmiuinmlg" target="_blank" class="ios-btn flex items-center p-3.5 rounded-2xl">
-                    <div class="w-10 h-10 bg-pink-500/20 rounded-xl flex items-center justify-center mr-4">
-                        <i class="fab fa-instagram text-pink-400 text-lg"></i>
+                <a href="https://www.instagram.com/sahabatpgmiuinmlg" target="_blank" class="ios-btn flex items-center p-3 rounded-2xl group">
+                    <div class="w-9 h-9 bg-gradient-to-tr from-yellow-500/20 via-pink-500/20 to-purple-500/20 rounded-xl flex items-center justify-center mr-3 border border-white/10">
+                        <i class="fab fa-instagram text-pink-400 text-base"></i>
                     </div>
-                    <span class="text-xs font-semibold text-gray-200">Instagram Resmi</span>
+                    <span class="text-[11px] font-semibold text-gray-200">Instagram Resmi</span>
                 </a>
 
-                <a href="https://www.tiktok.com/@sahabatpgmiuinmlg" target="_blank" class="ios-btn flex items-center p-3.5 rounded-2xl">
-                    <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center mr-4">
-                        <i class="fab fa-tiktok text-white text-lg"></i>
+                <a href="https://www.tiktok.com/@sahabatpgmiuinmlg" target="_blank" class="ios-btn flex items-center p-3 rounded-2xl group">
+                    <div class="w-9 h-9 bg-white/10 rounded-xl flex items-center justify-center mr-3 border border-white/10">
+                        <i class="fab fa-tiktok text-white text-base"></i>
                     </div>
-                    <span class="text-xs font-semibold text-gray-200">TikTok PGMI</span>
+                    <span class="text-[11px] font-semibold text-gray-200">TikTok PGMI</span>
                 </a>
             </div>
 
-            <!-- Tombol Navigasi Bawah -->
-            <button onclick="togglePage()" class="w-full py-4 rounded-2xl text-[11px] font-bold bg-white text-black shadow-lg active:scale-95 transition-all uppercase tracking-widest">
-                Tentang Diri Saya
+            <!-- Separator: Padding diperkecil -->
+            <div class="py-3 flex justify-center items-center gap-2">
+                <div class="h-[0.5px] w-8 bg-white/10"></div>
+                <div class="w-1 h-1 rounded-full bg-white/20"></div>
+                <div class="h-[0.5px] w-8 bg-white/10"></div>
+            </div>
+
+            <button onclick="togglePage()" class="ios-btn w-full py-3.5 rounded-2xl text-[11px] font-bold bg-white text-black shadow-lg active:scale-95 transition-all mb-1">
+                TENTANG DIRI SAYA
             </button>
         </div>
 
-        <!-- HALAMAN 2 -->
-        <div id="portfolio-page" class="page p-6">
-            <div class="flex items-center justify-between mb-8">
-                <button onclick="togglePage()" class="w-9 h-9 ios-btn rounded-full flex items-center justify-center">
-                    <i class="fas fa-chevron-left text-[10px]"></i>
+        <!-- ================= HALAMAN 2: PORTFOLIO ================= -->
+        <div id="portfolio-page" class="page px-4 pt-5 pb-4 overflow-y-auto scrollbar-hide">
+            <div class="flex justify-between items-center mb-4">
+                <button onclick="togglePage()" class="w-8 h-8 ios-btn rounded-full flex items-center justify-center">
+                    <i class="fas fa-chevron-left text-[9px]"></i>
                 </button>
-                <span class="text-[9px] font-bold tracking-[0.2em] text-gray-400 uppercase">Profil Pengurus</span>
-                <div class="w-9"></div>
+                <span class="text-[8px] font-bold tracking-[0.2em] text-gray-400 uppercase">Portfolio</span>
+                <div class="w-8"></div>
             </div>
 
-            <div class="flex flex-col items-center mb-8">
-                <div class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-800 rounded-3xl flex items-center justify-center text-white text-3xl font-bold shadow-xl mb-4 border border-white/20">
+            <div class="flex flex-col items-center mb-5">
+                <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-800 rounded-2xl flex items-center justify-center text-white text-xl font-bold shadow-2xl mb-2 border border-white/20">
                     MK
                 </div>
-                <h2 class="text-lg font-bold">M. Awaluddin Kamil</h2>
-                <p class="text-[9px] text-emerald-400 font-bold tracking-[0.2em] uppercase mt-1">NIM 240103110166</p>
+                <h2 class="text-base font-bold text-center">M. Awaluddin Kamil</h2>
+                <p class="text-[8px] text-emerald-400 font-bold tracking-widest uppercase">NIM 240103110166</p>
             </div>
 
-            <div class="space-y-4">
-                <div class="ios-btn p-4 rounded-2xl">
-                    <p class="text-[10px] text-gray-300 leading-relaxed text-center">
+            <div class="space-y-2.5">
+                <div class="ios-btn p-3 rounded-2xl">
+                    <div class="flex items-center gap-2 mb-1 text-emerald-400">
+                        <i class="fas fa-user-circle text-[9px]"></i>
+                        <h3 class="text-[8px] font-bold uppercase tracking-widest">Profil Singkat</h3>
+                    </div>
+                    <p class="text-[9px] text-gray-400 leading-tight text-justify">
                         Mahasiswa PGMI UIN Malang yang berdedikasi dalam inovasi pendidikan dasar dan pengembangan media kreatif digital.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-2 gap-3">
-                    <a href="#" class="ios-btn py-3 rounded-xl flex items-center justify-center gap-2">
-                        <i class="fab fa-whatsapp text-green-400"></i>
-                        <span class="text-[10px] font-bold">WhatsApp</span>
-                    </a>
-                    <a href="#" class="ios-btn py-3 rounded-xl flex items-center justify-center gap-2">
-                        <i class="fas fa-envelope text-blue-400"></i>
-                        <span class="text-[10px] font-bold">Email</span>
-                    </a>
+                <div class="ios-btn p-3.5 rounded-2xl">
+                    <h3 class="text-[8px] font-bold text-gray-300 uppercase tracking-widest mb-2.5 text-center">Hubungi Saya</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="#" class="ios-btn py-2 rounded-xl flex items-center justify-center gap-2 text-[8px] font-bold">
+                            <i class="fab fa-whatsapp text-green-400 text-xs"></i> WA
+                        </a>
+                        <a href="#" class="ios-btn py-2 rounded-xl flex items-center justify-center gap-2 text-[8px] font-bold">
+                            <i class="fab fa-instagram text-pink-400 text-xs"></i> IG
+                        </a>
+                        <a href="#" class="ios-btn py-2 rounded-xl flex items-center justify-center gap-2 text-[8px] font-bold">
+                            <i class="fab fa-tiktok text-white text-xs"></i> TikTok
+                        </a>
+                        <a href="#" class="ios-btn py-2 rounded-xl flex items-center justify-center gap-2 text-[8px] font-bold">
+                            <i class="fas fa-envelope text-blue-400 text-xs"></i> Email
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <p class="text-center text-[8px] text-gray-600 font-bold tracking-[0.4em] uppercase mt-10">HMPS PGMI 2024</p>
+            <p class="text-center text-[7px] text-gray-600 font-bold tracking-[0.4em] uppercase py-5">HMPS PGMI 2024</p>
         </div>
     </div>
 
@@ -170,10 +183,18 @@
         function togglePage() {
             const main = document.getElementById('main-page');
             const port = document.getElementById('portfolio-page');
-            main.classList.toggle('page-active');
-            main.style.display = main.classList.contains('page-active') ? 'flex' : 'none';
-            port.classList.toggle('page-active');
-            port.style.display = port.classList.contains('page-active') ? 'flex' : 'none';
+            
+            if (main.classList.contains('page-active')) {
+                main.classList.remove('page-active');
+                main.style.display = 'none';
+                port.style.display = 'flex';
+                port.classList.add('page-active');
+            } else {
+                port.classList.remove('page-active');
+                port.style.display = 'none';
+                main.style.display = 'flex';
+                main.classList.add('page-active');
+            }
         }
     </script>
 </body>
